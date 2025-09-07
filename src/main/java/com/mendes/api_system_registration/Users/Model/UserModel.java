@@ -1,5 +1,6 @@
-package com.mendes.api_system_registration;
+package com.mendes.api_system_registration.Users.Model;
 
+import com.mendes.api_system_registration.Events.Model.EventsModel;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,11 @@ public class UserModel {
      private  String city;
      private String profession;
 
+     // Um usuário pertence a apenas um evento
+     @ManyToOne
+     @JoinColumn(name = "events_id") // Foreing Key ou chave estrangeira,  // Define a chave estrangeira que relaciona usuários e eventos
+     private EventsModel events;
+
     //no-args constructor, Construtor padrao requerido pelo JPA
     public UserModel() {
 
@@ -27,7 +33,7 @@ public class UserModel {
         this.profession = profession;
     }
 
-    //CRIANDO MODIFICADORES DE ACESSO (GETTERS E SETTERS)
+    // Métodos de acesso (getters e setters) para manipular os atributos da entidade
     public String getName() {
         return name;
     }
