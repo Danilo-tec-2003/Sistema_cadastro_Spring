@@ -2,9 +2,16 @@ package com.mendes.api_system_registration.Events.Model;
 
 import com.mendes.api_system_registration.Users.Model.UserModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "tb_events")
@@ -13,7 +20,10 @@ public class EventsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String nameEvent;
+
     private LocalDate dateEvent;
     private String descriptionEvent;
 
@@ -22,34 +32,5 @@ public class EventsModel {
     @OneToMany(mappedBy = "events")
     private List<UserModel> users;
 
-    public EventsModel() {
 
-    }
-
-    public EventsModel(String nameEvent, LocalDate dateEvent, String descriptionEvent) {
-        this.nameEvent = nameEvent;
-        this.dateEvent = dateEvent;
-        this.descriptionEvent = descriptionEvent;
-    }
-
-    public String getNameEvent() {
-        return nameEvent;
-    }
-    public void setNameEvent(String nameEvent) {
-        this.nameEvent =nameEvent;
-    }
-
-    public LocalDate getDateEvent () {
-        return dateEvent;
-    }
-    public void setDateEvent(LocalDate dateEvent) {
-        this.dateEvent = dateEvent;
-    }
-
-    public String getDescriptionEvent() {
-        return descriptionEvent;
-    }
-    public void setDescriptionEvent(String descriptionEvent) {
-        this.descriptionEvent = descriptionEvent;
-    }
 }
