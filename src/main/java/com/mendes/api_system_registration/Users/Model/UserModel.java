@@ -16,13 +16,24 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
+
+    @Column(name = "nm_name")
      private String name;
-     private int age;
+
+    @Column(name = "nr_age")
+     private Integer age;
+
+    @Column(name = "nm_city")
      private  String city;
+
+    @Column(name = "nm_profession")
      private String profession;
 
      @Column(unique = true)
      private String cpf;
+
+     @Column(name = "url_img")
+     private String urlImg;
 
      // Um usuário pertence a apenas um evento
      @ManyToOne

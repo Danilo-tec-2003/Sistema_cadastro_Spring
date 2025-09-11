@@ -21,10 +21,13 @@ public class EventsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "nm_name_event")
     private String nameEvent;
 
+    @Column(name = "dt_date_event")
     private LocalDate dateEvent;
+
+    @Column(name = "nm_description_event")
     private String descriptionEvent;
 
     // Relacionamento 1:N (um evento pode ter vários usuários vinculados)
