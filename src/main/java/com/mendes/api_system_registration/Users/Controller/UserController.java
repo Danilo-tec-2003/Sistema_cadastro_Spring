@@ -1,17 +1,38 @@
 package com.mendes.api_system_registration.Users.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
-    @GetMapping("/boasvindas")
-    public String boasvindas() {
-        return "Boas vinda, esse é o meu  controlador.";
+
+    @GetMapping("/all")
+    public String getAllUsers() {
+        return "Retornando todos os usuários.";
     }
 
+    @PostMapping("/create")
+    public String createUser() {
+        return "Adicionando um novo usuário.";
+    }
+
+    @GetMapping("/{id}")
+    public String getUserById() {
+        return "Buscando usuário por ID.";
+    }
+
+    @PutMapping("/{id}")
+    public String updateUser() {
+        return "Alterando usuário por ID.";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser() {
+        return "Deletando usuário.";
+    }
 }
+
 
 
 
