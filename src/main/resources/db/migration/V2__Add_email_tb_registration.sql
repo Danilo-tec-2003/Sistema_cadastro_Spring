@@ -1,0 +1,1 @@
+ALTER TABLE tb_registration ADD COLUMN email VARCHAR(255);
