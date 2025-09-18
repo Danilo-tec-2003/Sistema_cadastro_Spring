@@ -20,8 +20,8 @@ public class EventsController {
     }
 
     @GetMapping("/{id}")
-    public String getEventByEvent() {
-        return "Retornando Evento por ID.";
+    public EventsModel findEventsById(@PathVariable Long id) {
+        return eventsService.findEventsById(id);
     }
 
     @PostMapping("/create")
