@@ -21,14 +21,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/{id}")
+    public UserModel findUserById(@PathVariable Long id) {
+        return userService.findUserById(id);
+    }
+
     @PostMapping("/create")
     public String createUser() {
         return "Adicionando um novo usuário.";
-    }
-
-    @GetMapping("/{id}")
-    public String getUserById() {
-        return "Buscando usuário por ID.";
     }
 
     @PutMapping("/{id}")

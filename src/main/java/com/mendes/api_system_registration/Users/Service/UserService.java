@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,5 +17,10 @@ public class UserService {
     // Método para listar todos os usuários
     public List<UserModel> getAllUsers() {
         return usersRepository.findAll();
+    }
+
+    public UserModel findUserById(Long id) {
+        Optional<UserModel> userById = usersRepository.findById(id);
+                return userById.orElse(null);
     }
 }
