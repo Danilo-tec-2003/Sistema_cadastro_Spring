@@ -6,6 +6,7 @@ import com.mendes.api_system_registration.Events.Repository.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -28,4 +29,13 @@ public class EventsService {
                                 "Não existe Evento com id:" + id)
                 );
     }
+
+    public EventsModel createEvent (EventsModel event) {
+        return eventsRepository.save(event);
+    }
+
+    public void deleteEventById(@PathVariable long id) {
+         eventsRepository.deleteById(id);
+    }
+
 }
