@@ -25,8 +25,8 @@ public class EventsController {
     }
 
     @PostMapping("/create")
-    public String createEvent() {
-        return "Registrando um novo Evento.";
+    public EventsModel createEvent( @RequestBody EventsModel event) {
+        return eventsService.createEvent(event);
     }
 
     @PutMapping("/{id}")
@@ -34,9 +34,9 @@ public class EventsController {
         return "Alterando o Evento por ID";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteEvent() {
-        return "Deletando o Evento por ID";
+    @DeleteMapping("/event/{id}")
+    public void deleteEventById(@PathVariable long id) {
+        eventsService.deleteEventById(id);
     }
 
 }
