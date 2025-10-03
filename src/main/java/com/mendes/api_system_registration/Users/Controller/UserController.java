@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createUser() {
-        return "Adicionando um novo usuário.";
+    public UserModel createUser(@RequestBody UserModel user) {
+        return userService.createUser(user);
     }
 
     @PutMapping("/{id}")
@@ -36,9 +36,9 @@ public class UserController {
         return "Alterando usuário por ID.";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser() {
-        return "Deletando usuário.";
+    @DeleteMapping("/delete/{id}")
+    public void deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
     }
 }
 
