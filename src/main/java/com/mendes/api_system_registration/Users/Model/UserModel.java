@@ -1,5 +1,6 @@
 package com.mendes.api_system_registration.Users.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mendes.api_system_registration.Events.Model.EventsModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,7 @@ public class UserModel {
      // Um usuário pertence a apenas um evento
      @ManyToOne
      @JoinColumn(name = "events_id") // Foreing Key ou chave estrangeira,  // Define a chave estrangeira que relaciona usuários e eventos
+     @JsonBackReference //parte “filho” da relação, será ignorada na serialização (evita loop).
      private EventsModel events;
 
 
