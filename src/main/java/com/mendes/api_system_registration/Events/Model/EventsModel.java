@@ -1,5 +1,6 @@
 package com.mendes.api_system_registration.Events.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mendes.api_system_registration.Users.Model.UserModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class EventsModel {
     // Relacionamento 1:N (um evento pode ter vários usuários vinculados)
     // "mappedBy" indica que o lado dono da relação é o atributo "events" dentro de UserModel
     @OneToMany(mappedBy = "events")
+    @JsonManagedReference //parte “pai” da relação, será serializada normalmente.
     private List<UserModel> users;
 
 
