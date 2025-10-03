@@ -19,8 +19,19 @@ public class UserService {
         return usersRepository.findAll();
     }
 
+    //lista usuario por id
     public UserModel findUserById(Long id) {
         Optional<UserModel> userById = usersRepository.findById(id);
                 return userById.orElse(null);
     }
+
+    //criar usuario
+    public UserModel createUser (UserModel user) {
+        return usersRepository.save(user);
+    }
+
+    public void deleteUserById(Long id) {
+        usersRepository.deleteById(id);
+    }
+
 }
