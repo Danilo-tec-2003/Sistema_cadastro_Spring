@@ -34,6 +34,15 @@ public class EventsService {
         return eventsRepository.save(event);
     }
 
+    public EventsModel editEvent ( Long id, EventsModel eventsDetails) {
+       if(!eventsRepository.existsById(id)) {
+           return null;
+       }
+       eventsDetails.setId(id);
+       return eventsRepository.save(eventsDetails);
+    }
+
+
     public void deleteEventById(@PathVariable long id) {
          eventsRepository.deleteById(id);
     }

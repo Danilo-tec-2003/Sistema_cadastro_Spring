@@ -29,9 +29,9 @@ public class EventsController {
         return eventsService.createEvent(event);
     }
 
-    @PutMapping("/{id}")
-    public String updateEvent() {
-        return "Alterando o Evento por ID";
+    @PutMapping("/edit/{id}")
+    public EventsModel editEvent(@PathVariable Long id, @RequestBody EventsModel eventDetails) {
+        return eventsService.editEvent(id,eventDetails);
     }
 
     @DeleteMapping("/event/{id}")
