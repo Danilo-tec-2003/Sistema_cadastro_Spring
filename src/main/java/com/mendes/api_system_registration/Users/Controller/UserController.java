@@ -31,10 +31,11 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PutMapping("/{id}")
-    public String updateUser() {
-        return "Alterando usuário por ID.";
+    @PutMapping("/edit/{id}")
+    public UserModel editUser(@PathVariable Long id, @RequestBody UserModel userDetails) {
+        return userService.editUser(id, userDetails);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteUserById(@PathVariable Long id) {

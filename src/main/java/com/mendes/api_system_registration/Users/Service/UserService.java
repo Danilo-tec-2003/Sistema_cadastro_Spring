@@ -4,6 +4,8 @@ import com.mendes.api_system_registration.Users.Model.UserModel;
 import com.mendes.api_system_registration.Users.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +36,13 @@ public class UserService {
         usersRepository.deleteById(id);
     }
 
+    public UserModel editUser(Long id, UserModel userDetails) {
+        UserModel user = usersRepository.findById(id).orElse(null);
+
+        if (usersRepository.existsById(id)) {
+            userDetails.setId(id);
+            return usersRepository.save(userDetails);
+        }
+        return null;
+    }
 }
