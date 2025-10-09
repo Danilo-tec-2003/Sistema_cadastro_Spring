@@ -42,6 +42,7 @@ public class UserModel {
      @JsonBackReference //parte “filho” da relação, será ignorada na serialização (evita loop).
      private EventsModel events;
 
-
+    @Column(name = "email")
+    private String email;
 }
 
