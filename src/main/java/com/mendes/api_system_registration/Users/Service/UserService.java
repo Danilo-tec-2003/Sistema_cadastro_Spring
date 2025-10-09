@@ -1,5 +1,7 @@
 package com.mendes.api_system_registration.Users.Service;
 
+import com.mendes.api_system_registration.Users.DTO.UsersDTO;
+import com.mendes.api_system_registration.Users.Mapper.UsersMapper;
 import com.mendes.api_system_registration.Users.Model.UserModel;
 import com.mendes.api_system_registration.Users.Repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UserService {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private UsersMapper usersMapper;
+
     // Método para listar todos os usuários
     public List<UserModel> getAllUsers() {
         return usersRepository.findAll();
@@ -24,12 +29,17 @@ public class UserService {
     //lista usuario por id
     public UserModel findUserById(Long id) {
         Optional<UserModel> userById = usersRepository.findById(id);
-                return userById.orElse(null);
+        return userById.orElse(null);
     }
 
-    //criar usuario
-    public UserModel createUser (UserModel user) {
-        return usersRepository.save(user);
+    //Mapeando o DTO recebido e salvando no banco de dados
+    public UserModel createUser (UsersDTO userDTO) {
+
+        //1 - converte o objeto DTO em uma entidade Model usando o mapper
+        UserModel userModel = usersMapper.toEntity(userDTO);
+
+        //2 - salva a entidade convertida no banco de dados e retorna um objeto persistido
+       return usersRepository.save(userModel);
     }
 
     public void deleteUserById(Long id) {

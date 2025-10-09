@@ -1,5 +1,6 @@
 package com.mendes.api_system_registration.Users.Controller;
 
+import com.mendes.api_system_registration.Users.DTO.UsersDTO;
 import com.mendes.api_system_registration.Users.Model.UserModel;
 import com.mendes.api_system_registration.Users.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,12 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    // Recebe um DTO no corpo da requisição, envia para o service e retorna o usuario criado
     @PostMapping("/create")
-    public UserModel createUser(@RequestBody UserModel user) {
-        return userService.createUser(user);
+    public UserModel createUser(@RequestBody UsersDTO userDTO) {
+
+        //1 - chama o metodo do service que converte o DTO em entidade e salva no banco
+        return userService.createUser(userDTO);
     }
 
     @PutMapping("/edit/{id}")
@@ -42,8 +46,3 @@ public class UserController {
         userService.deleteUserById(id);
     }
 }
-
-
-
-
-
