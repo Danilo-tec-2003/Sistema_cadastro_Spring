@@ -20,5 +20,8 @@ public class UsersDTO {
     private EventsModel events;
     private String email;
 
+    private Long eventId;
+    private String eventName;
+
 }
 
