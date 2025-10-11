@@ -1,5 +1,6 @@
 package com.mendes.api_system_registration.Events.Controller;
 
+import com.mendes.api_system_registration.Events.DTO.EventsDTO;
 import com.mendes.api_system_registration.Events.Model.EventsModel;
 import com.mendes.api_system_registration.Events.Service.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +16,23 @@ public class EventsController {
     private EventsService eventsService;
 
     @GetMapping("/all")
-    public List<EventsModel> getAllEvents() {
+    public List<EventsDTO> getAllEvents() {
         return eventsService.getAllEvents();
     }
 
     @GetMapping("/{id}")
-    public EventsModel findEventsById(@PathVariable Long id) {
+    public EventsDTO findEventsById(@PathVariable Long id) {
         return eventsService.findEventsById(id);
     }
 
     @PostMapping("/create")
-    public EventsModel createEvent( @RequestBody EventsModel event) {
-        return eventsService.createEvent(event);
+    public EventsDTO createEvent( @RequestBody EventsDTO eventsDTO) {
+        return eventsService.createEvent(eventsDTO);
     }
 
-    @PutMapping("/{id}")
-    public String updateEvent() {
-        return "Alterando o Evento por ID";
+    @PutMapping("/edit/{id}")
+    public EventsDTO editEvent(@PathVariable Long id, @RequestBody EventsDTO eventDetails) {
+        return eventsService.editEvent(id, eventDetails);
     }
 
     @DeleteMapping("/event/{id}")
