@@ -43,6 +43,15 @@ public class EventsService {
        return eventsMapper.toDTO(savedEvent);
     }
 
+    public EventsModel editEvent ( Long id, EventsModel eventsDetails) {
+       if(!eventsRepository.existsById(id)) {
+           return null;
+       }
+       eventsDetails.setId(id);
+       return eventsRepository.save(eventsDetails);
+    }
+
+
     public void deleteEventById(@PathVariable long id) {
          eventsRepository.deleteById(id);
     }
