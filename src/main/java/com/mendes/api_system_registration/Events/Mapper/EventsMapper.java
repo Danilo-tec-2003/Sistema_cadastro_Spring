@@ -1,60 +1,61 @@
 package com.mendes.api_system_registration.Events.Mapper;
 
 import com.mendes.api_system_registration.Events.DTO.EventsDTO;
+import com.mendes.api_system_registration.Events.DTO.EventsSummaryDTO;
 import com.mendes.api_system_registration.Events.Model.EventsModel;
-import com.mendes.api_system_registration.Users.DTO.UserSummaryDTO;
-import org.springframework.stereotype.Component;
+import com.mendes.api_system_registration.Users.Mapper.UserMapper;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import java.util.List;
-import java.util.stream.Collectors;
+/**
+ * Interface de Mapper para conversão entre a entidade {@link EventsModel} e seus DTOs.
+ * <p>
+ * Utiliza a biblioteca MapStruct para gerar a implementação em tempo de compilação.
+ * <p>
+ * A anotação {@code @Mapper(componentModel = "spring", uses = {UserMapper.class})}
+ * instrui o MapStruct a:
+ * 1. Criar uma implementação que é um Bean do Spring.
+ * 2. <strong>Usar o {@link UserMapper}</strong> sempre que precisar converter
+ * qualquer coisa relacionada a Usuários (ex: List<User> para List<UserSummaryDTO>).
+ * Isso elimina a necessidade de escrever métodos 'default' manuais.
+ */
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
+public interface EventsMapper {
 
-@Component
-public class EventsMapper {
+    /**
+     * Converte uma entidade {@link EventsModel} para um {@link EventsSummaryDTO} (DTO Resumido).
+     * Usado para listas, onde apenas dados essenciais são necessários.
+     *
+     * @param eventsModel A entidade {@link EventsModel} a ser convertida.
+     * @return O {@link EventsSummaryDTO} correspondente.
+     */
+    EventsSummaryDTO toSummaryDTO(EventsModel eventsModel);
 
-    // - pega o atributo do Model e atribui a entidade encapsulada do DTO
-    public EventsModel toEntity(EventsDTO eventsDTO) {
-        if (eventsDTO == null) {
-            return null;
-        }
+    /**
+     * Converte uma entidade {@link EventsModel} para um {@link EventsDTO} (DTO Detalhado).
+     * <p>
+     * O MapStruct automaticamente usará o {@link UserMapper} (definido no 'uses' da classe)
+     * para converter a lista de {@code List<User>} para {@code List<UserSummaryDTO>}.
+     * Não é necessário um @Mapping ou método default.
+     *
+     * @param eventsModel A entidade {@link EventsModel} a ser convertida.
+     * @return O {@link EventsDTO} correspondente.
+     */
+    EventsDTO toDTO(EventsModel eventsModel);
 
-        EventsModel eventsModel = new EventsModel();
-
-        eventsModel.setId(eventsDTO.getId());
-        eventsModel.setNameEvent(eventsDTO.getNameEvent());
-        eventsModel.setDateEvent(eventsDTO.getDateEvent());
-        eventsModel.setDescriptionEvent(eventsDTO.getDescriptionEvent());
-
-        return eventsModel;
-    }
-
-    //** mapeando, pega o DTO e trasnforma em uma entidade
-    public EventsDTO toDTO(EventsModel eventsModel) {
-        if (eventsModel == null) {
-            return null;
-        }
-
-        EventsDTO eventsDTO = new EventsDTO();
-
-        eventsDTO.setId(eventsModel.getId());
-        eventsDTO.setNameEvent(eventsModel.getNameEvent());
-        eventsDTO.setDateEvent(eventsModel.getDateEvent());
-        eventsDTO.setDateEvent(eventsModel.getDateEvent());
-        eventsDTO.setDescriptionEvent(eventsModel.getDescriptionEvent());
-
-        // Verifica se o evento possui usuários associados.
-        // Para cada usuário, cria um UserSummaryDTO contendo apenas id, nome e cidade,
-        // e adiciona a lista de resumos ao EventsDTO.
-        if (eventsModel.getUsers() != null) {
-            List<UserSummaryDTO> userSummaries = eventsModel.getUsers().stream()
-                    .map(user -> new UserSummaryDTO(
-                            user.getId(),
-                            user.getName(),
-                            user.getCity()
-                    ))
-                    .collect(Collectors.toList());
-
-            eventsDTO.setUsers(userSummaries);
-        }
-        return eventsDTO;
-    }
+    /**
+     * Converte um {@link EventsDTO} (DTO) para uma entidade {@link EventsModel}.
+     * <p>
+     * <strong>CORREÇÃO DE BUG:</strong> A anotação {@code @Mapping(target = "users", ignore = true)}
+     * é crucial. Ela impede que o MapStruct tente converter {@code List<UserSummaryDTO>}
+     * (do DTO) para {@code List<User>} (da Entidade), o que causaria um erro.
+     * <p>
+     * A lógica de associar usuários a um evento deve ser feita manualmente na
+     * camada de Serviço (Service).
+     *
+     * @param eventsDTO O {@link EventsDTO} a ser convertido.
+     * @return A entidade {@link EventsModel} correspondente.
+     */
+    @Mapping(target = "users", ignore = true)
+    EventsModel toEntity(EventsDTO eventsDTO);
 }
