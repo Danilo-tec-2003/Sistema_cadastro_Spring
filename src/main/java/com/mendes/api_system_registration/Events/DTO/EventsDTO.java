@@ -1,6 +1,7 @@
 package com.mendes.api_system_registration.Events.DTO;
 
 import com.mendes.api_system_registration.Users.DTO.UserSummaryDTO;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,16 +31,22 @@ public class EventsDTO { // Nome ajustado para o singular
     /**
      * O nome oficial do evento.
      */
+    @NotBlank(message = "O nome do evento é obrigatório.")
+    @Size(min = 5, message = "O nome do evento deve ter no mínimo 5 caracteres.")
     private String nameEvent;
 
     /**
      * A data em que o evento ocorrerá.
      */
+    @NotNull(message = "A data do evento é obrigatória.")
+    @FutureOrPresent(message = "Data inválida: não é permitido registrar um evento em uma data passada.")
     private LocalDate dateEvent;
 
     /**
      * Uma descrição detalhada sobre o evento.
      */
+    @NotBlank(message = "A descrição do evento é obrigatória.")
+    @Size(min = 10, message = "A descrição do evento deve ter no mínimo 10 caracteres.")
     private String descriptionEvent;
 
     /**
