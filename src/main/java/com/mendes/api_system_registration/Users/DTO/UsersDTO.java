@@ -2,6 +2,11 @@ package com.mendes.api_system_registration.Users.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mendes.api_system_registration.Events.Model.EventsModel;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -18,11 +23,22 @@ import lombok.Data;
 public class UsersDTO {
 
     private Long id;
+
+    @NotBlank(message = "O nome não pode estar em branco.")
+    @Size(min = 3, message = "O nome deve ter no mínimo 3 caracteres.")
     private String name;
+
+    @NotNull(message = "A idade é obrigatória.")
     private Integer age;
+
     private String city;
+
     private String profession;
+
+    @NotBlank(message = "O e-mail é obrigatório.")
+    @Email(message = "Formato de e-mail inválido.")
     private String email;
+
     private String urlImg;
 
     /**
@@ -32,6 +48,8 @@ public class UsersDTO {
      * Isso permite que o CPF seja recebido em requisições (POST/PUT), mas nunca enviado em respostas.
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotBlank(message = "O CPF é obrigatório.")
+    @Size(min = 11, max = 14, message = "O CPF deve ter entre 11 e 14 caracteres (considerando pontuação).")
     private String cpf;
 
 

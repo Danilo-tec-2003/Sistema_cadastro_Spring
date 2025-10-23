@@ -4,6 +4,7 @@ import com.mendes.api_system_registration.Events.DTO.EventsDTO; // DTO Renomeado
 import com.mendes.api_system_registration.Events.DTO.EventsSummaryDTO; // Assumindo que você criará um DTO Resumido, assim como fez para User
 import com.mendes.api_system_registration.Events.DTO.EventsSummaryDTO;
 import com.mendes.api_system_registration.Events.Service.EventsService; // Service Renomeado
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -72,7 +73,7 @@ public class EventsController {
      * evento recém-criado e o cabeçalho 'Location' contém a URL para acessá-lo.
      */
     @PostMapping
-    public ResponseEntity<EventsDTO> createEvent(@RequestBody EventsDTO eventDTO) {
+    public ResponseEntity<EventsDTO> createEvent(@Valid @RequestBody EventsDTO eventDTO) {
         EventsDTO newEvent = eventsService.createEvent(eventDTO);
 
         // Constrói a URI do novo recurso criado para retornar no header 'Location'
@@ -95,7 +96,7 @@ public class EventsController {
      * Lançará uma exceção (tratada como 404 Not Found) se o evento não existir.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<EventsDTO> editEvent(@PathVariable Long id, @RequestBody EventsDTO eventDetails) {
+    public ResponseEntity<EventsDTO> editEvent(@PathVariable Long id, @Valid @RequestBody EventsDTO eventDetails) {
         EventsDTO updatedEvent = eventsService.editEvent(id, eventDetails);
         return ResponseEntity.ok(updatedEvent);
     }
