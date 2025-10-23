@@ -3,6 +3,7 @@ package com.mendes.api_system_registration.Users.Controller;
 import com.mendes.api_system_registration.Users.DTO.UsersDTO;
 import com.mendes.api_system_registration.Users.DTO.UserSummaryDTO;
 import com.mendes.api_system_registration.Users.Service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -71,7 +72,7 @@ public class UserController {
      * usuário recém-criado e o cabeçalho 'Location' contém a URL para acessá-lo.
      */
     @PostMapping
-    public ResponseEntity<UsersDTO> createUser(@RequestBody UsersDTO userDTO) {
+    public ResponseEntity<UsersDTO> createUser(@Valid @RequestBody UsersDTO userDTO) {
         UsersDTO newUser = userService.createUser(userDTO);
 
         // Constrói a URI do novo recurso criado para retornar no header 'Location'
@@ -94,7 +95,7 @@ public class UserController {
      * Retornará 404 Not Found se o usuário não existir.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UsersDTO> editUser(@PathVariable Long id, @RequestBody UsersDTO userDetails) {
+    public ResponseEntity<UsersDTO> editUser(@PathVariable Long id, @Valid @RequestBody UsersDTO userDetails) {
         UsersDTO updatedUser = userService.editUser(id, userDetails);
         return ResponseEntity.ok(updatedUser);
     }
